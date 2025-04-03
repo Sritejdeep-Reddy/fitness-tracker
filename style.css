@@ -1,0 +1,299 @@
+/* Import Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Zen+Kurenaido&display=swap');
+
+:root {
+    /* Demon Slayer Theme Palette */
+    --ds-dark-blue: #1a2a45; /* Corps Uniform Base */
+    --ds-black: #0f172a;      /* Darker Shade */
+    --ds-green: #059669;      /* Tanjiro's Haori Green */
+    --ds-red: #dc2626;        /* Accent Red (Hinokami Kagura) */
+    --ds-light-gray: #e5e7eb; /* Text on Dark */
+    --ds-medium-gray: #4b5563;/* Borders / Subtle Elements */
+    --ds-white: #f9fafb;      /* Headings / Bright Text */
+    --ds-card-bg: #1f2937;    /* Dark Card Background */
+
+    /* Reassigning base variables */
+    --primary-color: var(--ds-green);
+    --secondary-color: var(--ds-dark-blue);
+    --accent-color: var(--ds-red);
+    --light-color: var(--ds-light-gray);
+    --dark-color: var(--ds-black);
+    --card-bg: var(--ds-card-bg);
+    --text-color: var(--ds-light-gray);
+    --heading-color: var(--ds-white);
+    --border-color: var(--ds-medium-gray);
+    --border-radius: 6px; /* Slightly sharper corners */
+    --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Stronger shadow for dark theme */
+}
+
+#background-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100; /* Place behind everything */
+    object-fit: cover; /* Cover the area */
+    filter: brightness(0.6); /* Dim the video slightly */
+}
+
+body {
+    font-family: 'Noto Sans JP', sans-serif; /* Base font */
+    line-height: 1.7;
+    margin: 0;
+    padding: 25px;
+    /* background: linear-gradient(145deg, var(--ds-dark-blue), var(--ds-black)); Removed */
+    background-color: rgba(15, 23, 42, 0.7); /* Dark semi-transparent overlay fallback */
+    color: var(--text-color);
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative; /* Needed for potential overlay */
+    z-index: 1; /* Ensure body content is above video */
+}
+
+/* Optional: Add a dedicated overlay div if more control is needed */
+/* body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.6); // Adjust opacity
+    z-index: -50; // Between video and body content
+} */
+
+h1 {
+    font-family: 'Zen Kurenaido', sans-serif; /* Stylized heading font */
+    color: var(--heading-color);
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.8rem; /* Larger heading */
+    font-weight: 700; /* Noto Sans JP supports weights */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    letter-spacing: 1px;
+}
+
+h2, h3 {
+    font-family: 'Noto Sans JP', sans-serif;
+    color: var(--heading-color);
+    margin-bottom: 20px;
+    font-weight: 700;
+    border-bottom: 2px solid var(--primary-color); /* Green underline */
+    padding-bottom: 5px;
+    display: inline-block; /* Fit border to text */
+}
+
+h3 {
+    font-size: 1.3rem;
+    border-bottom-width: 1px;
+    border-color: var(--border-color);
+}
+
+.main-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    max-width: 1300px;
+    margin: 0 auto;
+    position: relative; /* Ensure content stays above background */
+    z-index: 2;
+}
+
+.column {
+    flex: 1;
+    min-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.card {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--border-color);
+    /* Animation */
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+    animation: cardFadeInUp 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add hover transition */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Lift card on hover */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+
+/* Stagger card animations */
+.left-column .card:nth-child(1) { animation-delay: 0.1s; }
+.left-column .card:nth-child(2) { animation-delay: 0.25s; }
+.right-column .card:nth-child(1) { animation-delay: 0.4s; }
+.right-column .card:nth-child(2) { animation-delay: 0.55s; }
+
+
+@keyframes cardFadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 400; /* Regular weight for labels */
+    color: var(--primary-color); /* Green labels */
+    font-size: 0.95rem;
+}
+
+input[type="text"], input[type="number"], select {
+    width: calc(100% - 22px); /* Adjust for padding */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: var(--ds-dark-blue); /* Dark input background */
+    color: var(--text-color); /* Light text in input */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus, input[type="number"]:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color); /* Green border on focus */
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.3); /* Green glow */
+}
+
+button {
+    padding: 12px 25px;
+    background-color: var(--accent-color); /* Red button */
+    color: var(--ds-white);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.05rem;
+    font-weight: 700; /* Bold button text */
+    text-transform: uppercase; /* Uppercase button text */
+    letter-spacing: 0.5px;
+    transition: background-color 0.3s ease, transform 0.15s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+button:hover {
+    background-color: #b91c1c; /* Darker red */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+}
+
+button:active {
+    transform: translateY(0px) scale(0.98);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+#todays-activity-list, #pr-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+#todays-activity-list li, #pr-list li {
+    background: var(--ds-dark-blue); /* Dark list item background */
+    margin-bottom: 10px;
+    padding: 12px 15px;
+    border-radius: 4px;
+    border-left: 5px solid var(--primary-color); /* Green accent border */
+    transition: background-color 0.3s ease, transform 0.2s ease, border-left-color 0.3s ease;
+    font-size: 0.95rem;
+    position: relative; /* For potential pseudo-elements */
+    overflow: hidden; /* For animations */
+}
+
+#todays-activity-list li:hover, #pr-list li:hover {
+    background-color: var(--ds-medium-gray);
+    transform: translateX(5px); /* Slight shift on hover */
+    border-left-color: var(--accent-color); /* Change border to red on hover */
+}
+
+#goal-input-area {
+    margin-bottom: 25px;
+}
+
+#stats-section h2 {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: none; /* Remove default border */
+    padding-bottom: 0;
+}
+
+#month-select {
+    font-size: 1rem;
+    padding: 6px 10px;
+    width: auto;
+    border-color: var(--border-color);
+    background-color: var(--ds-dark-blue);
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+#monthly-stats p, #current-status-section p {
+    margin: 8px 0;
+    font-size: 1rem;
+}
+
+#monthly-stats span, #current-status-section span {
+    font-weight: 700; /* Bold stats */
+    color: var(--primary-color); /* Green stat numbers */
+    margin-left: 5px;
+    display: inline-block; /* For potential transitions */
+    transition: color 0.3s ease;
+}
+
+#weight-chart-container {
+    width: 100%;
+    height: 280px; /* Slightly taller chart */
+    margin-top: 25px;
+    background-color: rgba(15, 23, 42, 0.5); /* Semi-transparent dark bg */
+    border-radius: var(--border-radius);
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    box-sizing: border-box; /* Include padding in dimensions */
+}
+
+#weight-chart-container p { /* Style placeholder text */
+    color: var(--ds-medium-gray);
+    text-align: center;
+    margin-top: 100px;
+}
+
+#avatar-container {
+    width: 100%;
+    height: 450px; /* Taller avatar area */
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    background-color: var(--ds-black); /* Dark background for avatar */
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    position: relative; /* For potential overlays */
+}
+
+#avatar-container canvas {
+    display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body { padding: 15px; }
+    .main-container { flex-direction: column; gap: 15px; }
+    .column { min-width: 100%; gap: 15px; }
+    h1 { font-size: 2.2rem; margin-bottom: 25px; }
+    .card { padding: 20px; }
+    button { padding: 10px 20px; font-size: 1rem; }
+    #avatar-container { height: 350px; }
+    #weight-chart-container { height: 220px; }
+}
